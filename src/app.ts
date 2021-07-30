@@ -1,9 +1,23 @@
-import express from "express";
-import { dogRouter } from "./routes";
+import express, { json, Request, Response } from "express";
 import mongoose from "mongoose";
+import cors from "cors";
+
+import { dogRouter } from "./routes";
+import { errorController } from "./controllers";
 
 const app = express();
+app.use(json()); // middleware
+app.use(cors());
+
 app.use("/dog", dogRouter);
+
+
+app.use("*", (req: Request, res: Response) => {
+  res.status(404);
+  res.send("Page not found!!!");
+});
+
+app.use(errorController.errorHandler);
 
 mongoose
   .connect("mongodb://localhost:27017/Dog-data", {
