@@ -4,7 +4,7 @@ import { dogService } from "../services";
 class DogController {
   async getAllBreed(req: Request, res: Response) {
     const data = await dogService.find();
-    console.log(data);
+    // console.log(data);
     res.send(data);
   }
 
@@ -21,7 +21,7 @@ class DogController {
       try {
         const data = await dogService.createBreed(req.body.breed);
         console.log(data);
-        res.send(data);
+        res.send(`"${req.body.breed}" added successfully!!`);
       } catch (err) {
         res.send(`Error : Breed already exists!!`)
       }

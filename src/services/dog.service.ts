@@ -5,14 +5,15 @@ class DogService {
   find() {
     return Details.find({});
   }
-  
+
   findByBreed(breed: String) {
     return Details.find({ breed: breed }, { species: 1, _id: 0 });
   }
 
   createBreed(breed: String) {
-    Details.insertMany([{ breed: breed }]);
-    return "New breed added successfully!!";
+    const doc = { breed: breed };
+    // return Details.collection.insertOne(doc);
+    return Details.insertMany([doc]);
   }
 
   updateByBreed(breed: String, newSpecies: string[]) {

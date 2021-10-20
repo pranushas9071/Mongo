@@ -49,12 +49,79 @@ var DogController = /** @class */ (function () {
                     case 0: return [4 /*yield*/, services_1.dogService.find()];
                     case 1:
                         data = _a.sent();
-                        console.log(data);
+                        // console.log(data);
                         res.send(data);
                         return [2 /*return*/];
                 }
             });
         });
+    };
+    DogController.prototype.getSpecies = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(typeof req.query.breed == "string")) return [3 /*break*/, 2];
+                        return [4 /*yield*/, services_1.dogService.findByBreed(req.query.breed)];
+                    case 1:
+                        data = _a.sent();
+                        console.log(data);
+                        res.send(data);
+                        _a.label = 2;
+                    case 2: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    DogController.prototype.createBreed = function (req, res) {
+        return __awaiter(this, void 0, void 0, function () {
+            var data, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (!(typeof req.body.breed == "string")) return [3 /*break*/, 4];
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, services_1.dogService.createBreed(req.body.breed)];
+                    case 2:
+                        data = _a.sent();
+                        console.log(data);
+                        res.send("\"" + req.body.breed + "\" added successfully!!");
+                        return [3 /*break*/, 4];
+                    case 3:
+                        err_1 = _a.sent();
+                        res.send("Error : Breed already exists!!");
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    DogController.prototype.addSpecies = function (req, res) {
+        console.log(Object.keys(req));
+        var breed = req.query.breed, species = req.body.species;
+        if (typeof breed == "string" && Array.isArray(species)) {
+            var data = services_1.dogService.updateByBreed(breed, species);
+            console.log(data);
+            res.send(data);
+        }
+    };
+    DogController.prototype.deleteBreed = function (req, res) {
+        if (typeof req.query.breed == "string") {
+            var data = services_1.dogService.deleteBreed(req.query.breed);
+            console.log(data);
+            res.send(data);
+        }
+    };
+    DogController.prototype.deleteSpecies = function (req, res) {
+        if (typeof req.query.breed == "string" &&
+            typeof req.query.species == "string") {
+            var data = services_1.dogService.deleteSpecies(req.query.breed, req.query.species);
+            console.log(data);
+            res.send(data);
+        }
     };
     return DogController;
 }());
