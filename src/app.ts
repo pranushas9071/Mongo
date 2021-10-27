@@ -2,7 +2,7 @@ import express, { json, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-import { dogRouter } from "./routes";
+import { dogRouter,uploadRouter } from "./routes";
 import { errorController } from "./controllers";
 
 const app = express();
@@ -10,6 +10,7 @@ app.use(json()); // middleware
 app.use(cors());
 
 app.use("/dog", dogRouter);
+app.use("/user",uploadRouter)
 
 
 app.use("*", (req: Request, res: Response) => {
